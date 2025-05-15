@@ -120,4 +120,4 @@ ai_attendance_system/
 ## 🙋‍♂️ Maintainer
 Shailesh More
 📧 shailesh5751@gmail.com
-🌐 LinkedIn
+🌐 LinkedIn - https://www.linkedin.com/in/shailesh-more/
