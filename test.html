@@ -1,0 +1,104 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Location</title>
+</head>
+
+<body>
+
+    <div id="location-info">
+        <p>User's Latitude: <span id="latitude"></span></p>
+        <p>User's Longitude: <span id="longitude"></span></p>
+    </div>
+
+    <script>
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    successCallback,
+                    errorCallback
+                );
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
+        }
+        function successCallback(position) {
+            const userLatitude = position.coords.latitude;
+            const userLongitude = position.coords.longitude;
+
+            // Update the HTML content with user's location
+            document.getElementById("latitude").textContent = userLatitude.toFixed(6);
+            document.getElementById("longitude").textContent = userLongitude.toFixed(6);
+
+            console.log("User's Location:", userLatitude, userLongitude);
+        }
+
+        function errorCallback(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    console.error("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    console.error("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    console.error("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    console.error("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        // Call the function to get user location
+        getUserLocation();
+    </script>
+
+</body>
+
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Scroll to Bottom</title>
+<style>
+    /* CSS styles for the chat container */
+    #chat-container {
+        height: 300px; /* Set the height of the chat container */
+        overflow-y: scroll; /* Enable vertical scrolling */
+    }
+</style>
+</head>
+<body>
+<div id="chat-container">
+    <!-- Your chat content goes here -->
+    <div class="chat">Chat 1</div>
+    <div class="chat">Chat 2</div>
+    <div class="chat">Chat 3</div>
+    <!-- More chat content -->
+</div>
+
+<!-- Include jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    // Function to scroll to the bottom of the chat container
+    function scrollToBottom() {
+        var chatContainer = document.getElementById("chat-container");
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // Call the function initially to scroll to the bottom
+    scrollToBottom();
+});
+</script>
+</body>
+</html>

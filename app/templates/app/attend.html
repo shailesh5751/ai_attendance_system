@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<div class="main-wrapper account-wrapper">
+    <div class="account-page">
+        <div class="account-center">
+            <div class="account-box">
+                {% for message in messages %}
+                <div class="container-fluid p-0">
+                    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true" class="btn-close">X</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                <form class="form-signin" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{form.student}}
+                        <label>Select Unit</label>
+                        <select name="unitAttendent" id="" class="form-control">
+                            <option value=""></option>
+                            {% if units_list %}
+                            {% for unit in units_list %}
+                                {% if unit.day == day_of_week %}
+                                    <option value="{{unit}}" aria-required="true">{{unit.code}}: {{unit.name}} ({{unit.startTime}}-{{unit.endTime}})</option>
+                                {% endif %}
+                            {% endfor %}
+                            {% else %}
+                                <option value="">No unit to attend today</option>
+                            {% endif %}
+                        </select>                                              
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary account-btn">Attend</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+<!-- JavaScript for location prompt -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    // Do something with the obtained coordinates (e.g., send to the server)
+                    console.log('Latitude:', position.coords.latitude);
+                    console.log('Longitude:', position.coords.longitude);
+                },
+                function (error) {
+                    console.error('Error getting location:', error.message);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    });
+</script>
+
+{% endblock content %}

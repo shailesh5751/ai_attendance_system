@@ -1,0 +1,157 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content">
+        <div class="card-box profile-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <p style="text-align: center;"><b>You Class Attendance Register</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-tabs">
+            <ul class="nav nav-tabs nav-tabs-bottom" id="unitTabs">
+                {% for unit_data in unit_attendance_data %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="tab" data-unit-code="{{ unit_data.unit.code }}">
+                        {{ unit_data.unit.code }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+                <div class="tab-content">
+                    {% for unit_data in unit_attendance_data %}
+                    <div class="tab-pane" id="unit-{{ unit_data.unit.code }}">
+                        <section class="page">
+                        {% for week, attendance_list in unit_data.attendance_by_week.items %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-box">
+                                    <h3 class="card-title">Attendance for {{ unit_data.unit.code }} - Week 
+                                        {{ week }}
+                                    </h3>
+                                    <div class="experience-box">
+                                        <div class="table-responsive">
+                                            <table id="myTable" class="table mb-0 new-patient-table">
+                                                <thead>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="card-box">
+                                                                <!-- <h3 class="card-title">Unit Info</h3> -->
+                                                                <div>
+                                                                    <p><strong>Unit:</strong> {{ attendance_list.0.unitAttendent.code }}: {{ attendance_list.0.unitAttendent.name }}</p>
+                                                                    <p><strong>Course:</strong> {{ attendance_list.0.student.course }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="card-box">
+                                                                <!-- <h3 class="card-title">Student Info</h3> -->
+                                                                <div>
+                                                                    <p><strong>School:</strong> {{ attendance_list.0.student.school }}</p>
+                                                                    <p><strong>Lecturer:</strong> {{ attendance_list.0.unitAttendent.lecturer }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                    
+                                                    <tr>
+                                                        <th>Admission Number</th>
+                                                        <th>Name</th>
+                                                        <th>Date</th>
+                                                        <th>Time</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for attendance in attendance_list %}
+                                                    <tr>
+                                                        <td>{{ attendance.student.user }}</td>
+                                                        <td>{{ attendance.student.first_name }}
+                                                            {{ attendance.student.last_name }}</td>
+                                                        <td>{{ attendance.date }}</td>
+                                                        <td>{{ attendance.time }}</td>
+                                                        {% if attendance.status == 'Present' %}
+                                                        <td><i class="fa fa-check text-success"></i></td>
+                                                        {% else %}
+                                                        <td><i class="fa fa-close text-danger"></i></td>
+                                                        {% endif %}
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group text-center">
+                            <button id="downloadButton" class="btn btn-primary account-btn">Export</button>
+                        </div> -->
+                        {% endfor %}
+                        </section>
+                    </div>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+</div> 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var unitTabs = document.getElementById("unitTabs");
+        unitTabs.addEventListener("click", function (event) {
+            event.preventDefault();
+            var targetTab = event.target;
+            var unitCode = targetTab.getAttribute("data-unit-code");
+            showTabContent(unitCode);
+        });
+
+        function showTabContent(unitCode) {
+            var tabs = document.querySelectorAll(".tab-pane");
+            tabs.forEach(function (tab) {
+                tab.classList.remove("show", "active");
+                if (tab.id === "unit-" + unitCode) {
+                    tab.classList.add("show", "active");
+                }
+            });
+        }
+    });
+</script>
+
+<script>
+    document.getElementById('downloadButton').addEventListener('click', function () {
+        var jsPDF = window.jspdf.jsPDF;
+        var section = document.querySelector('.page');
+        var originalWidth = section.offsetWidth;
+        var originalHeight = section.offsetHeight;
+
+        // Set the desired scaling factors for width and height (you can adjust these values)
+        var scaleWidth = 1.5;
+        var scaleHeight = 2;
+
+        // Set the new width and height to the section
+        section.style.width = originalWidth * scaleWidth + 'px';
+        section.style.height = originalHeight * scaleHeight + 'px';
+
+        html2canvas(section, { scale: 2 }).then(function (canvas) {
+            var imgData = canvas.toDataURL('image/png');
+            var pdf = new jsPDF('p', 'mm', 'a4');
+            pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+            pdf.save('downloaded_section.pdf');
+
+            // Restore the original width and height
+            section.style.width = originalWidth + 'px';
+            section.style.height = originalHeight + 'px';
+        });
+    });
+</script>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+    {% endblock content %}

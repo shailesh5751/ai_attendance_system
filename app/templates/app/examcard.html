@@ -1,0 +1,246 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous">
+    </script>
+<div style="color: black;" class="page-wrapper">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="page-title">Exam Card</h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-8 col-lg-8 col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                    </div>
+                    
+                   
+                    <section class="page">
+                        <div class="row">
+                            <div class="download-exam-card">
+                                <div class="table-responsive">
+                                    <p style="text-align: center;">
+                                        <img style="width: 200px; height: 110px;" src="{% static 'img/logo.png' %}"
+                                            alt="">
+                                    </p>
+                                    <p style="text-align: center;"><b>OFFICE OF THE REGISTRAR, ACADEMIC AFFAIRS</b></p>
+                                    <p style="text-align: center;"><b>P.O.Box 103-40404, Rongo</b></p>
+                                    <hr>
+                                    <p style="text-align: center;"><b><u>STUDENT EXERMINATION CARD</u></b></p>
+                                    <p style="text-align: center;"><b>AUTHORITY TO SIT END OF EXAMINATION</b></p>
+                                    <p><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            SCHOOL:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {{student.school}}</p>
+                                    <p><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            PROGRAM:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {{student.course}}</p>
+                                    <div class="row container-fluid">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="car">
+                                                <div class="card-boy">
+                                                    <div class="col-md-12">
+                                                        <p><b>ACADEMIC YEAR:</b>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            2023/2024</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="car">
+                                                <div class="card-bod">
+                                                    <div class="col-md-12">
+                                                        <p><b>SESSION:</b>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            {{student.semester}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="car">
+                                                <div class="card-bd">
+                                                    <div class="col-md-12">
+                                                        <p><b>YEAR OF STUDY:</b>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            {{student.year}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="car">
+                                                <div class="card-bd">
+                                                    <div class="col-md-12">
+                                                        <p><b>STUDY METHOD:</b>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            Regular</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="car">
+                                                <div class="card-bd">
+                                                    <div class="col-md-12">
+                                                        <p><b>ADMISSION NUMBER:</b>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            {{student.user.username}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="car">
+                                                <div class="card-bd">
+                                                    <div class="col-md-12">
+                                                        <p><b>NAME:</b>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            {{student.first_name}} {{student.last_name}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table custom-table mb-0 datatable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="text-decoration: none;">Units for
+                                                                    {{student.user.username}} {{student.first_name}} {{student.last_name}}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>COURSE CODE</th>
+                                                                <th>COURSE NAME</th>
+                                                                <th>BOOKLET SERIAL No.</th>
+                                                                <th>LECTURE SIGNATURE</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for unit in unit_list %}
+                                                                <tr>
+                                                                    <td>{{ forloop.counter }}</td>
+                                                                    <td>{{ unit.code }}</td>
+                                                                    <td>{{ unit.name }}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>                                                        
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="row container-fluid">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                                            <div class="car">
+                                                <div class="card-boy">
+                                                    <div class="col-md-12">
+                                                        <p><b>
+                                                                <hr>
+                                                            </b>
+                                                            STUDENT SIGNATURE</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                                            <div class="car">
+                                                <div class="card-bod">
+                                                    <div class="col-md-12">
+                                                        <p><b>
+                                                                <hr>
+                                                            </b>
+                                                            DEAN SIGNATURE AND STAMP</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                                            <div class="car">
+                                                <div class="card-bd">
+                                                    <div class="col-md-12">
+                                                        <p><b>
+                                                                <hr>
+                                                            </b>
+                                                            REGISTRAR-AA`S SIGNATURE AND STAMP</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <button id="downloadButton" class="btn btn-primary">Download Exam Card as PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div class="sidebar-overlay" data-reff=""></div>
+<script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
+
+<!-- Your existing scripts -->
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+<script src="{% static 'js/select2.min.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+
+<script>
+    document.getElementById('downloadButton').addEventListener('click', function () {
+        var jsPDF = window.jspdf.jsPDF;
+        var section = document.querySelector('.page');
+        var originalWidth = section.offsetWidth;
+        var originalHeight = section.offsetHeight;
+
+        // Set the desired scaling factors for width and height (you can adjust these values)
+        var scaleWidth = 1.5;
+        var scaleHeight = 2;
+
+        // Set the new width and height to the section
+        section.style.width = originalWidth * scaleWidth + 'px';
+        section.style.height = originalHeight * scaleHeight + 'px';
+
+        html2canvas(section, { scale: 2 }).then(function (canvas) {
+            var imgData = canvas.toDataURL('image/png');
+            var pdf = new jsPDF('p', 'mm', 'a4');
+            pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+            pdf.save('exam_card.pdf');
+
+            // Restore the original width and height
+            section.style.width = originalWidth + 'px';
+            section.style.height = originalHeight + 'px';
+        });
+    });
+</script>
+
+</script>
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+<script src="{% static 'js/select2.min.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock content %}
